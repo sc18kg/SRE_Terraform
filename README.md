@@ -1,15 +1,15 @@
 # Terraform
 
-##What is Terraform?
+## What is Terraform?
 
 Open-source Infrastructure as Code software tool which provides a consistent CLI (command line interface) workflow to manage cloud services. Terraform codifies cloud APIs (application programming interface) which is a software intermediary that allows two applications to talk to each other.
-- Write
+### Write
 Write infrastructure as code using declarative configuration files. HashiCorp Configuration Language (HCL) allows for concise descriptions of resources using blocks, arguments and expressions
 
-- Plan
+### Plan
 Run terraform plan to check whether the execution plan for a configuration matches your expectations before provisioning or changing infrastructure.
 
-- Apply
+### Apply
 Apply changes to hundreds of cloud providers with terraform apply to reach the desired state of the configuration.
 
 ## Purpose of Terraform
@@ -57,6 +57,32 @@ Global options (use these before the subcommand, if any):
   -version      An alias for the "version" subcommand.
 ```
 ## Setting up Terraform
+To begin using Terraform we need to create some environmental variables on your system.
+`Windows > Edit the system environmental variables > Environmental Variables > Add `
+You will need to add two variables:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+To start using Terraform we need to create a file names `main.tf`
+- Add the code to initialise terraform with provider AWS
+```
+provider "aws"{
+	region = "eu-west-1"
+
+}
+```
+- Run this code with `terraform init`
+- If successful:
+```
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+```
+- You will also notice the creation of two fles `.terraform` and `.terraform.lock.hcl` which should be added to a git ignore.
+
+
 
 ## Securing AWS key for Terraform
 
