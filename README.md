@@ -1,1 +1,63 @@
-# SRE_Terraform
+# Terraform
+
+##What is Terraform?
+
+Open-source Infrastructure as Code software tool which provides a consistent CLI (command line interface) workflow to manage cloud services. Terraform codifies cloud APIs (application programming interface) which is a software intermediary that allows two applications to talk to each other.
+- Write
+Write infrastructure as code using declarative configuration files. HashiCorp Configuration Language (HCL) allows for concise descriptions of resources using blocks, arguments and expressions
+
+- Plan
+Run terraform plan to check whether the execution plan for a configuration matches your expectations before provisioning or changing infrastructure.
+
+- Apply
+Apply changes to hundreds of cloud providers with terraform apply to reach the desired state of the configuration.
+
+## Purpose of Terraform
+
+## Benefits
+- Lightweight meaning it doesnt slow down your machine
+- Cloud Independant so it will connect to any cloud using modules
+- Open-source so no costs for use
+- Simple language close to JSON which means no indentation issues
+
+## Usage
+Running `Terraform` in the command line brings up all the usage for Terraform
+```
+Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+
+All other commands:
+  console       Try Terraform expressions at an interactive command prompt
+  fmt           Reformat your configuration in the standard style
+  force-unlock  Release a stuck lock on the current workspace
+  get           Install or upgrade remote Terraform modules
+  graph         Generate a Graphviz graph of the steps in an operation
+  import        Associate existing infrastructure with a Terraform resource
+  login         Obtain and save credentials for a remote host
+  logout        Remove locally-stored credentials for a remote host
+  output        Show output values from your root module
+  providers     Show the providers required for this configuration
+  refresh       Update the state to match remote systems
+  show          Show the current state or a saved plan
+  state         Advanced state management
+  taint         Mark a resource instance as not fully functional
+  test          Experimental support for module integration testing
+  untaint       Remove the 'tainted' state from a resource instance
+  version       Show the current Terraform version
+  workspace     Workspace management
+
+Global options (use these before the subcommand, if any):
+  -chdir=DIR    Switch to a different working directory before executing the
+                given subcommand.
+  -help         Show this help output, or the help for a specified subcommand.
+  -version      An alias for the "version" subcommand.
+```
+## Setting up Terraform
+
+## Securing AWS key for Terraform
+
+
