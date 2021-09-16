@@ -1,6 +1,7 @@
 # Terraform
 
 ## What is Terraform?
+![terraform](img/terraf.png)
 
 Open-source Infrastructure as Code software tool which provides a consistent CLI (command line interface) workflow to manage cloud services. Terraform codifies cloud APIs (application programming interface) which is a software intermediary that allows two applications to talk to each other.
 ### Write
