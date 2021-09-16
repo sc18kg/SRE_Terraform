@@ -83,7 +83,29 @@ should now work.
 - You will also notice the creation of two fles `.terraform` and `.terraform.lock.hcl` which should be added to a git ignore.
 
 
+## Creating Resources on AWS
 
-## Securing AWS key for Terraform
+Lets start by launching an EC2 instance using our app AMI
+```
+resource "aws_instance" "app_instance" {
+    ami = "ami-ID"
+    instance_type = "t2.micro"
+    associate_public_ip_address = true
+    tags = {
+        Name = "SRE_kieron_terraform_app"
+    }
+}
+```
+To run this new code `terraform plan` if successful run `terraform apply`
+This will prompt the user to enter `yes` to build the EC2 instance
+- You should see the following:
+```
+aws_instance.app_instance: Creating...
+aws_instance.app_instance: Still creating... [10s elapsed]
+aws_instance.app_instance: Still creating... [20s elapsed]
+aws_instance.app_instance: Still creating... [30s elapsed]
+aws_instance.app_instance: Creation complete after 33s [id=i-0ed97ab41a2475e91]
 
-
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+Once completed you can head over to the cloud provider, here is AWS and check out the new instance
