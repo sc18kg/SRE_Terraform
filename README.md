@@ -83,15 +83,109 @@ should now work.
 ```
 - You will also notice the creation of two fles `.terraform` and `.terraform.lock.hcl` which should be added to a git ignore.
 
-
-## Creating Resources on AWS
-
-Lets start by launching an EC2 instance using our app AMI
+## Setting up VPC
 ```
-resource "aws_instance" "app_instance" {
-    ami = "ami-ID"
+resource "aws_vpc" "sre_kieron_appVPC" {
+    cidr_block = "IP.HERE"
+    instance_tenancy = "default"
+
+    tags = {
+        Name = "sre_kieron_appVPC"
+    }
+}
+```
+## Creating an Internet Gateway
+```
+resource "aws_internet_gateway" "sre_kieron_internetg" {
+    vpc_id = var.vpc_id
+
+    tags = {
+        Name = "sre_kieron_internetg"
+    }
+}
+```
+## Creating a Public Subnet
+```
+resource "aws_subnet" "sre_kieron_app_subnet"{
+        availability_zone = "eu-west-1a"
+        vpc_id = var.vpc_id
+        cidr_block = "IP.HERE"
+        map_public_ip_on_launch = "true"
+
+        tags = {
+            Name = "sre_kieron_app_subnet"
+        }
+}
+```
+## Creating a Security Group
+Here we create the security group for the app, we allow all aceept out with the `egress` and then `port 22`, `port 80` and `port 3000` for the `ingress` rules
+```
+resource "aws_security_group" "sre_kieron_secgroup_app"{
+    description = "The Security group for my app "
+    vpc_id = var.vpc_id
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    
+    ingress {
+        from_port = 3000
+        to_port = 3000
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+      Name = "sre_kieron_secgroup_app"
+    }
+}
+```
+## Adding the IG to the Route Table
+```
+ resource "aws_route" "r"{
+     route_table_id = var.aws_routet_pub
+     destination_cidr_block = "0.0.0.0/0"
+     gateway_id = var.internetg_id
+ }
+```
+## Launching the EC2 instance
+After all the previous steps have been completed we are able to launch an EC2 instance using our app AMI with our VPC
+```
+resource "aws_instance" "sre_kieron_terraform_app" {
+    ami = "ami-00e8ddf087865b27f"
+    subnet_id = var.aws_subnet_pub
+    vpc_security_group_ids = [var.aws_secgroup_app]
     instance_type = "t2.micro"
     associate_public_ip_address = true
+    key_name = var.aws_key_name
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = var.aws_key_path
+      host = "${self.associate_public_ip_address}"
+    }
+    provisioner "remote-exec" {
+        inline = [
+            "cd app",
+            "npm start"
+        ]
+      
+    }
     tags = {
         Name = "SRE_kieron_terraform_app"
     }
@@ -107,6 +201,6 @@ aws_instance.app_instance: Still creating... [20s elapsed]
 aws_instance.app_instance: Still creating... [30s elapsed]
 aws_instance.app_instance: Creation complete after 33s [id=i-0ed97ab41a2475e91]
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
 ```
-Once completed you can head over to the cloud provider, here is AWS and check out the new instance
+Once completed you can head over to the cloud provider, here is AWS and check out the new instance.
