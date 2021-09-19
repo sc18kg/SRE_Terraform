@@ -207,6 +207,7 @@ Once completed you can head over to the cloud provider, here is AWS and check ou
 ## Creating a Database EC2 instance
 
 ## Loadbalancer
+![awsload](img/awsload.jpeg)
 ### Launch Configuration
 ```
 resource "aws_launch_configuration" "app_launch_configuration" {
