@@ -49,18 +49,12 @@ resource "aws_security_group" "sre_kieron_secgroup_db"{
         cidr_blocks = ["0.0.0.0/0"]
     }
     ingress {
-        from_port = 80
-        to_port = 80
+        from_port = 27017
+        to_port = 27017
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
     
-    ingress {
-        from_port = 3000
-        to_port = 3000
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
     tags = {
       Name = "sre_kieron_secgroup_db"
     }
